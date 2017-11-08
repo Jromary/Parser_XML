@@ -1,5 +1,6 @@
 # -- coding: utf-8 --
 
+
 class Item(object):
 	"""docstring for Item"""
 	def __init__(self, name = None, atribut = {}, types = 'Node'):
@@ -52,8 +53,9 @@ class Tree(object):
 	def __str__aux(self, dist = 0, indent = ''):
 		res = ""
 		distance = 3+dist#+len(str(self.Val))
-		for i in range(len(indent), distance-4):
-			indent += ' '
+		"""for i in range(len(indent), distance-4):
+			indent += ''
+		"""
 		indents = indent
 		res += str(self.Val) + '\n'
 		for i in range(len(self.Child)):
@@ -101,7 +103,7 @@ class Tree(object):
 			file = open(name, 'r')
 			data = file.read()
 			file.close()
-			print data
+			print (data)
 			tab = []
 			i = 0
 			tempo = ''
@@ -119,7 +121,10 @@ class Tree(object):
 						if data[j] == '>':
 							break
 					i = j
-					tab.append(temp.split(' ', 1))
+					if len(temp) > 4 and temp[0]=='!' and temp[1]=='-' and temp[2]=='-' and temp[-1]=='-' and temp[-2]=='-':
+						tab.append([str(temp[3:-2:]),{}, 'Commentaire'])
+					else:
+						tab.append(temp.split(' ', 1))
 				tempo += data[i]
 				i += 1
 
@@ -172,7 +177,7 @@ class Tree(object):
 					tab[i].append('Element')
 
 			for i in range(len(tab)):#on remplie l'arbre avec les balise
-				if tab[i][2] == 'Text':
+				if tab[i][2] == 'Text' or tab[i][2] == 'Commentaire':
 					self.Push(Item(tab[i][0], tab[i][1], tab[i][2]))
 				elif tab[i][0][0] == '/':#si balise fermante on remonte dans l'arbre
 					self = self.Ancestor()
@@ -190,7 +195,8 @@ class Tree(object):
 
 def main():
 	pipop = Tree('Test.xml')
-	print pipop
+	print()
+	print (pipop)
 
 
 if __name__ == '__main__':

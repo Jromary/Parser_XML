@@ -44,7 +44,7 @@ class Tree(object):
 
 	def __repr__(self):
 		return 'Tree()'
-	
+
 	def __str__(self):
 		"""Show All the current tree, with a unfold
 		like systeme"""
@@ -52,7 +52,7 @@ class Tree(object):
 
 	def __str__aux(self, dist = 0, indent = ''):
 		res = ""
-		distance = 3+dist#+len(str(self.Val))
+		distance = 3+dist
 		"""for i in range(len(indent), distance-4):
 			indent += ''
 		"""
@@ -83,13 +83,13 @@ class Tree(object):
 
 	def Ancestor(self):
 		return self.Parent
-	
+
 	def Push(self, val = None):
 		"""Add a child at the current node"""
 		New_Tree = Tree(val, self)
 		New_Tree.Parent = self
 		self.Child.append(New_Tree)
-	
+
 	def Pop(self):
 		"""Remove the current node and all child of it"""
 		self.Parent.Child.remove(self)
@@ -110,8 +110,10 @@ class Tree(object):
 			while i < len(data):#parcourt toutes les lignes
 				if data[i] == '<':#si balise ouvrante
 					if len(tempo[1::]) > 0 and tempo[1::] != '\n':
-						tab.append([str(tempo[1::]),{}, 'Text'])
-						pass
+						for j in range(len(tempo[1::])):
+							if not(tempo[j+1] == ' ' or tempo[j+1] == '\n'):
+								tab.append([str(tempo[1::]),{}, 'Text'])
+								break
 					tempo = ''
 					temp = ''
 					j = i+1
@@ -189,7 +191,7 @@ class Tree(object):
 					self.Push(Item(tab[i][0], tab[i][1], tab[i][2]))
 		else:
 			return
-		
+
 
 
 
